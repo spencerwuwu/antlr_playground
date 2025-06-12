@@ -1,8 +1,8 @@
 set(ANTLR_DIR
-   "/home/weicheng/protocol/SURE25/antlr4/runtime/Cpp"
+    ${PROJECT_SOURCE_DIR}/../../_deps/antlr4_cpp-runtime/
 )
 
-set(CMAKE_LIBRARY_PATH "/home/weicheng/protocol/SURE25/antlr4/runtime/Cpp/build/runtime" ${CMAKE_LIBRARY_PATH})
+set(CMAKE_LIBRARY_PATH ${ANTLR_DIR}/build/runtime ${CMAKE_LIBRARY_PATH})
 find_library(RUNTIME antlr4-runtime)
 
 set(TARGET "url")
@@ -35,7 +35,7 @@ include_directories(
   ${ANTLR_DIR}/runtime/src/tree
   ${ANTLR_DIR}/runtime/src/support
   ${PROJECT_SOURCE_DIR}/generated
-  ${PROJECT_SOURCE_DIR}/../
+  ${PROJECT_SOURCE_DIR}/../../_deps
   )
 
 set(antlr4_SRC 
