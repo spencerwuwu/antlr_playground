@@ -35,6 +35,7 @@ include_directories(
   ${ANTLR_DIR}/runtime/src/tree
   ${ANTLR_DIR}/runtime/src/support
   ${PROJECT_SOURCE_DIR}/generated
+  ${PROJECT_SOURCE_DIR}/../
   )
 
 set(antlr4_SRC 
