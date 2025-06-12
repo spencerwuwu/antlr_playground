@@ -1,4 +1,6 @@
 build/
+_workdir/
+antlr4-*
 
 CMakeLists.txt.user
 CMakeCache.txt
