@@ -1,5 +1,5 @@
 set(ANTLR_DIR
-    ${PROJECT_SOURCE_DIR}/../../_deps/antlr4_cpp-runtime/
+    ${PROJECT_SOURCE_DIR}/../../deps/antlr4_cpp-runtime/
 )
 
 set(CMAKE_LIBRARY_PATH ${ANTLR_DIR}/build/runtime ${CMAKE_LIBRARY_PATH})
@@ -35,7 +35,7 @@ include_directories(
   ${ANTLR_DIR}/runtime/src/tree
   ${ANTLR_DIR}/runtime/src/support
   ${PROJECT_SOURCE_DIR}/generated
-  ${PROJECT_SOURCE_DIR}/../../_deps
+  ${PROJECT_SOURCE_DIR}/../../deps
   )
 
 set(antlr4_SRC 
