@@ -98,7 +98,7 @@ def syn_parser(workdir, target, setting):
 
 def main():
     parser = argparse.ArgumentParser(description="Create antlr4 parser for a given grammar in cpp that parses an input to tokens + parse_tree in json format")
-    parser.add_argument('--workdir', type=str, default="_workdir", help='Path to the working directory for generated files')
+    parser.add_argument('--workdir', type=str, default="_workdir", help='Path to the working directory for generated files (Default: _workdir)')
     parser.add_argument('target', type=str, help='Target grammar to generate for')
 
     args = parser.parse_args()
