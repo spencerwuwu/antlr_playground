@@ -56,9 +56,16 @@ int main(int argc, const char* argv[]) {
     // Read from stdin
     ANTLRInputStream input(std::cin);
 
+    // Register error listener, exit when error
+    MyErrorListener errorListener;
+
     // Parse input with lexer
     {{target_lexer}} lexer(&input);
     CommonTokenStream tokens(&lexer);
+
+    // Attach error listener to lexer
+    lexer.removeErrorListeners();
+    lexer.addErrorListener(&errorListener);
 
     // Collect tokens as a list
     tokens.fill();
@@ -72,8 +79,7 @@ int main(int argc, const char* argv[]) {
     // Parse the tokens
     {{target_parser}} parser(&tokens);
 
-    // Register error listener, exit when error
-    MyErrorListener errorListener;
+    // Attach error listener to parser
     parser.removeErrorListeners();
     parser.addErrorListener(&errorListener);
 
