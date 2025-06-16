@@ -1,0 +1,20 @@
+diff --git a/runtime/Cpp/runtime/src/CommonToken.cpp b/runtime/Cpp/runtime/src/CommonToken.cpp
+index db1f0bcf3..7a925f602 100644
+--- a/runtime/Cpp/runtime/src/CommonToken.cpp
++++ b/runtime/Cpp/runtime/src/CommonToken.cpp
+@@ -1,4 +1,4 @@
+-﻿/* Copyright (c) 2012-2017 The ANTLR Project. All rights reserved.
++/* Copyright (c) 2012-2017 The ANTLR Project. All rights reserved.
+  * Use of this file is governed by the BSD 3-clause license that
+  * can be found in the LICENSE.txt file in the project root.
+  */
+@@ -94,7 +94,8 @@ std::string CommonToken::getText() const {
+   if (_start < n && _stop < n) {
+     return input->getText(misc::Interval(_start, _stop));
+   } else {
+-    return "<EOF>";
++    //return "<EOF>";
++    return "";
+   }
+ }
+ 
