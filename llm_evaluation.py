@@ -57,6 +57,8 @@ Labels:
 Task:
 Assign the most appropriate label to line 6 of the C code and explain your reasoning based on the C and assembly correspondence.
 """
+        # TODO: perhaps give a JSON syntax to use to allow for easier parsing.
+
         client = self.clients[model]
         response = client.chat.completions.create(
             model=self.models[model],
@@ -83,6 +85,7 @@ Assign the most appropriate label to line 6 of the C code and explain your reaso
         if len(list_of_labels) <= 2:
             raise ValueError("list_of_labels must be greater than 2.")
         
+        # TODO: as of now we are just printing the response. We need to figure out how to compare them.
         for model in self.models.keys():
             try:
                 response = self.__send_prompt(model, code_range, instruction_range, list_of_labels)
