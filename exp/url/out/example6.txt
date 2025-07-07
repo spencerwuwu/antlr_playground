@@ -1,0 +1,67 @@
+
+-- archr/curl_url
++  Prefix @    4 inc   173: -> b'http'
+   - Byte @    1 inc   167:    b'h'
+   - Byte @    2 inc     6:    b'ht'
+   - Byte @    3 inc     1:    b'htt'
+   - Byte @    4 inc     3:    b'http'
++  Prefix @    7 inc    55: -> b'http://'
+   - Byte @    5 inc     9:    b'http:'
+   - Byte @    6 inc    49:    b'http:/'
++  Prefix @   14 inc     2: -> b'http://abc.com'
+   - Byte @   11 inc     1:    b'http://abc.'
+   - Byte @   12 inc     1:    b'http://abc.c'
++  Prefix @   15 inc     5: -> b'http://abc.com:'
+   - Byte @   15 inc     1:    b'http://abc.com:'
++  Prefix @   17 inc   125: -> b'http://abc.com:80'
+   - Byte @   16 inc   117:    b'http://abc.com:8'
+   - Byte @   17 inc     5:    b'http://abc.com:80'
++  Prefix @   18 inc     1: -> b'http://abc.com:80/'
+   - Byte @   18 inc     1:    b'http://abc.com:80/'
++  Prefix @   24 inc    37: -> b'http://abc.com:80/~smith'
+   - Byte @   19 inc    36:    b'http://abc.com:80/~'
+   - Byte @   20 inc     1:    b'http://abc.com:80/~s'
+x  Prefix @   25 xxx      : -> b'http://abc.com:80/~smith/'
++  Prefix @   34 inc     7: -> b'http://abc.com:80/~smith/home.html'
+   - Byte @   33 inc     3:    b'http://abc.com:80/~smith/home.htm'
+   - Byte @   34 inc     4:    b'http://abc.com:80/~smith/home.html'
+
+
+-- archr/apr_uri_parse
++  Prefix @    4 inc    17: -> b'http'
+   - Byte @    1 inc    16:    b'h'
+   - Byte @    2 inc     3:    b'ht'
+   - Byte @    3 inc     1:    b'htt'
++  Prefix @    7 inc    13: -> b'http://'
+   - Byte @    5 inc     2:    b'http:'
+   - Byte @    6 inc     1:    b'http:/'
+   - Byte @    7 inc     9:    b'http://'
++  Prefix @   14 inc     6: -> b'http://abc.com'
+   - Byte @    8 inc     5:    b'http://a'
+   - Byte @    9 inc     1:    b'http://ab'
++  Prefix @   15 inc     6: -> b'http://abc.com:'
+   - Byte @   15 inc     6:    b'http://abc.com:'
++  Prefix @   17 inc    31: -> b'http://abc.com:80'
+   - Byte @   16 inc    28:    b'http://abc.com:8'
+   - Byte @   17 inc     1:    b'http://abc.com:80'
+x  Prefix @   18 xxx      : -> b'http://abc.com:80/'
+x  Prefix @   24 xxx      : -> b'http://abc.com:80/~smith'
+x  Prefix @   25 xxx      : -> b'http://abc.com:80/~smith/'
++  Prefix @   34 inc     1: -> b'http://abc.com:80/~smith/home.html'
+   - Byte @   33 inc     1:    b'http://abc.com:80/~smith/home.htm'
+
+
++++++++++++++++++++
+++++++ Cross ++++++
++++++++++++++++++++
+
+archr/curl_url                 archr/apr_uri_parse           
++ 173                          +  17                          b'http'
++  55                          +  13                          b'http://'
++   2                          +   6                          b'http://abc.com'
++   5                          +   6                          b'http://abc.com:'
++ 125                          +  31                          b'http://abc.com:80'
++   1                            -                            b'http://abc.com:80/'
++  37                            -                            b'http://abc.com:80/~smith'
+  -                              -                            b'http://abc.com:80/~smith/'
++   7                          +   1                          b'http://abc.com:80/~smith/home.html'

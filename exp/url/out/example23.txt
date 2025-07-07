@@ -1,0 +1,48 @@
+
+-- archr/curl_url
++  Prefix @    3 inc    35: -> b'ssh'
+   - Byte @    1 inc    30:    b's'
+   - Byte @    2 inc     5:    b'ss'
++  Prefix @    6 inc    14: -> b'ssh://'
+   - Byte @    4 inc    11:    b'ssh:'
+   - Byte @    5 inc     3:    b'ssh:/'
+x  Prefix @   10 xxx      : -> b'ssh://user'
+x  Prefix @   11 xxx      : -> b'ssh://user@'
+x  Prefix @   15 xxx      : -> b'ssh://user@host'
+x  Prefix @   16 xxx      : -> b'ssh://user@host/'
++  Prefix @   17 inc     3: -> b'ssh://user@host/\n'
+   - Byte @   17 inc     3:    b'ssh://user@host/\n'
+
+
+-- archr/apr_uri_parse
++  Prefix @    3 inc    20: -> b'ssh'
+   - Byte @    1 inc    16:    b's'
+   - Byte @    2 inc     3:    b'ss'
+   - Byte @    3 inc     1:    b'ssh'
++  Prefix @    6 inc    15: -> b'ssh://'
+   - Byte @    4 inc     2:    b'ssh:'
+   - Byte @    5 inc     1:    b'ssh:/'
+   - Byte @    6 inc    12:    b'ssh://'
++  Prefix @   10 inc     7: -> b'ssh://user'
+   - Byte @    7 inc     6:    b'ssh://u'
+   - Byte @    8 inc     1:    b'ssh://us'
++  Prefix @   11 inc     5: -> b'ssh://user@'
+   - Byte @   11 inc     5:    b'ssh://user@'
++  Prefix @   15 inc     1: -> b'ssh://user@host'
+   - Byte @   14 inc     1:    b'ssh://user@hos'
+x  Prefix @   16 xxx      : -> b'ssh://user@host/'
+x  Prefix @   17 xxx      : -> b'ssh://user@host/\n'
+
+
++++++++++++++++++++
+++++++ Cross ++++++
++++++++++++++++++++
+
+archr/curl_url                 archr/apr_uri_parse           
++  35                          +  20                          b'ssh'
++  14                          +  15                          b'ssh://'
+  -                            +   7                          b'ssh://user'
+  -                            +   5                          b'ssh://user@'
+  -                            +   1                          b'ssh://user@host'
+  -                              -                            b'ssh://user@host/'
++   3                            -                            b'ssh://user@host/\n'

@@ -1,0 +1,66 @@
+
+-- archr/curl_url
++  Prefix @    4 inc    35: -> b'ftps'
+   - Byte @    1 inc    30:    b'f'
+   - Byte @    2 inc     5:    b'ft'
++  Prefix @    7 inc    14: -> b'ftps://'
+   - Byte @    5 inc    11:    b'ftps:'
+   - Byte @    6 inc     3:    b'ftps:/'
+x  Prefix @   11 xxx      : -> b'ftps://user'
+x  Prefix @   12 xxx      : -> b'ftps://user:'
+x  Prefix @   20 xxx      : -> b'ftps://user:password'
+x  Prefix @   21 xxx      : -> b'ftps://user:password@'
+x  Prefix @   32 xxx      : -> b'ftps://user:password@example.com'
+x  Prefix @   33 xxx      : -> b'ftps://user:password@example.com/'
+x  Prefix @   36 xxx      : -> b'ftps://user:password@example.com/pub'
+x  Prefix @   37 xxx      : -> b'ftps://user:password@example.com/pub/'
+x  Prefix @   45 xxx      : -> b'ftps://user:password@example.com/pub/file.txt'
++  Prefix @   46 inc     3: -> b'ftps://user:password@example.com/pub/file.txt\n'
+   - Byte @   46 inc     3:    b'ftps://user:password@example.com/pub/file.txt\n'
+
+
+-- archr/apr_uri_parse
++  Prefix @    4 inc    17: -> b'ftps'
+   - Byte @    1 inc    14:    b'f'
+   - Byte @    2 inc     2:    b'ft'
+   - Byte @    3 inc     1:    b'ftp'
++  Prefix @    7 inc    15: -> b'ftps://'
+   - Byte @    5 inc     2:    b'ftps:'
+   - Byte @    6 inc     1:    b'ftps:/'
+   - Byte @    7 inc    12:    b'ftps://'
++  Prefix @   11 inc     6: -> b'ftps://user'
+   - Byte @    8 inc     5:    b'ftps://u'
+   - Byte @    9 inc     1:    b'ftps://us'
++  Prefix @   12 inc     2: -> b'ftps://user:'
+   - Byte @   12 inc     2:    b'ftps://user:'
++  Prefix @   20 inc     1: -> b'ftps://user:password'
+   - Byte @   15 inc     1:    b'ftps://user:pas'
++  Prefix @   21 inc     5: -> b'ftps://user:password@'
+   - Byte @   21 inc     5:    b'ftps://user:password@'
++  Prefix @   32 inc     3: -> b'ftps://user:password@example.com'
+   - Byte @   22 inc     2:    b'ftps://user:password@e'
+   - Byte @   23 inc     1:    b'ftps://user:password@ex'
+x  Prefix @   33 xxx      : -> b'ftps://user:password@example.com/'
+x  Prefix @   36 xxx      : -> b'ftps://user:password@example.com/pub'
+x  Prefix @   37 xxx      : -> b'ftps://user:password@example.com/pub/'
+x  Prefix @   45 xxx      : -> b'ftps://user:password@example.com/pub/file.txt'
+x  Prefix @   46 xxx      : -> b'ftps://user:password@example.com/pub/file.txt\n'
+
+
++++++++++++++++++++
+++++++ Cross ++++++
++++++++++++++++++++
+
+archr/curl_url                 archr/apr_uri_parse           
++  35                          +  17                          b'ftps'
++  14                          +  15                          b'ftps://'
+  -                            +   6                          b'ftps://user'
+  -                            +   2                          b'ftps://user:'
+  -                            +   1                          b'ftps://user:password'
+  -                            +   5                          b'ftps://user:password@'
+  -                            +   3                          b'ftps://user:password@example.com'
+  -                              -                            b'ftps://user:password@example.com/'
+  -                              -                            b'ftps://user:password@example.com/pub'
+  -                              -                            b'ftps://user:password@example.com/pub/'
+  -                              -                            b'ftps://user:password@example.com/pub/file.txt'
++   3                            -                            b'ftps://user:password@example.com/pub/file.txt\n'

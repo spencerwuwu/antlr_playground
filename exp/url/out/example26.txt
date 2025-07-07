@@ -1,0 +1,45 @@
+
+-- archr/curl_url
++  Prefix @    4 inc    35: -> b'http'
+   - Byte @    1 inc    30:    b'h'
+   - Byte @    2 inc     5:    b'ht'
++  Prefix @    7 inc    14: -> b'http://'
+   - Byte @    5 inc    11:    b'http:'
+   - Byte @    6 inc     3:    b'http:/'
+x  Prefix @   20 xxx      : -> b'http://www.baidu.com'
+x  Prefix @   21 xxx      : -> b'http://www.baidu.com?'
+x  Prefix @   22 xxx      : -> b'http://www.baidu.com?a'
++  Prefix @   23 inc     3: -> b'http://www.baidu.com?a\n'
+   - Byte @   23 inc     3:    b'http://www.baidu.com?a\n'
+
+
+-- archr/apr_uri_parse
++  Prefix @    4 inc    12: -> b'http'
+   - Byte @    1 inc    12:    b'h'
+   - Byte @    2 inc     2:    b'ht'
+   - Byte @    3 inc     1:    b'htt'
++  Prefix @    7 inc    16: -> b'http://'
+   - Byte @    5 inc     2:    b'http:'
+   - Byte @    6 inc     1:    b'http:/'
+   - Byte @    7 inc    12:    b'http://'
++  Prefix @   20 inc     8: -> b'http://www.baidu.com'
+   - Byte @    8 inc     6:    b'http://w'
+   - Byte @    9 inc     1:    b'http://ww'
+   - Byte @   15 inc     1:    b'http://www.baid'
++  Prefix @   21 inc    11: -> b'http://www.baidu.com?'
+   - Byte @   21 inc    10:    b'http://www.baidu.com?'
++  Prefix @   22 inc     1: -> b'http://www.baidu.com?a'
+x  Prefix @   23 xxx      : -> b'http://www.baidu.com?a\n'
+
+
++++++++++++++++++++
+++++++ Cross ++++++
++++++++++++++++++++
+
+archr/curl_url                 archr/apr_uri_parse           
++  35                          +  12                          b'http'
++  14                          +  16                          b'http://'
+  -                            +   8                          b'http://www.baidu.com'
+  -                            +  11                          b'http://www.baidu.com?'
+  -                            +   1                          b'http://www.baidu.com?a'
++   3                            -                            b'http://www.baidu.com?a\n'

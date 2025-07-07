@@ -1,0 +1,45 @@
+
+-- archr/curl_url
++  Prefix @    5 inc   159: -> b'https'
+   - Byte @    1 inc   154:    b'h'
+   - Byte @    2 inc     7:    b'ht'
+   - Byte @    3 inc     1:    b'htt'
+   - Byte @    4 inc     2:    b'http'
++  Prefix @    8 inc    49: -> b'https://'
+   - Byte @    6 inc     6:    b'https:'
+   - Byte @    7 inc    43:    b'https:/'
++  Prefix @   18 inc     3: -> b'https://github.com'
+   - Byte @   16 inc     2:    b'https://github.c'
++  Prefix @   19 inc     1: -> b'https://github.com/'
+   - Byte @   19 inc     1:    b'https://github.com/'
++  Prefix @   20 inc    43: -> b'https://github.com/1'
+   - Byte @   20 inc    39:    b'https://github.com/1'
+
+
+-- archr/apr_uri_parse
++  Prefix @    5 inc    17: -> b'https'
+   - Byte @    1 inc    16:    b'h'
+   - Byte @    2 inc     3:    b'ht'
+   - Byte @    3 inc     1:    b'htt'
++  Prefix @    8 inc    16: -> b'https://'
+   - Byte @    6 inc     2:    b'https:'
+   - Byte @    7 inc     1:    b'https:/'
+   - Byte @    8 inc    12:    b'https://'
++  Prefix @   18 inc     8: -> b'https://github.com'
+   - Byte @    9 inc     6:    b'https://g'
+   - Byte @   10 inc     1:    b'https://gi'
+   - Byte @   16 inc     1:    b'https://github.c'
++  Prefix @   19 inc     1: -> b'https://github.com/'
++  Prefix @   20 inc     1: -> b'https://github.com/1'
+
+
++++++++++++++++++++
+++++++ Cross ++++++
++++++++++++++++++++
+
+archr/curl_url                 archr/apr_uri_parse           
++ 159                          +  17                          b'https'
++  49                          +  16                          b'https://'
++   3                          +   8                          b'https://github.com'
++   1                          +   1                          b'https://github.com/'
++  43                          +   1                          b'https://github.com/1'

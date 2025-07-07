@@ -1,0 +1,52 @@
+
+-- archr/curl_url
++  Prefix @    7 inc    43: -> b'git+ssh'
+   - Byte @    1 inc    30:    b'g'
+   - Byte @    2 inc     5:    b'gi'
+   - Byte @    4 inc     8:    b'git+'
++  Prefix @   10 inc     6: -> b'git+ssh://'
+   - Byte @    8 inc     3:    b'git+ssh:'
+   - Byte @    9 inc     3:    b'git+ssh:/'
+x  Prefix @   20 xxx      : -> b'git+ssh://github.com'
+x  Prefix @   21 xxx      : -> b'git+ssh://github.com/'
+x  Prefix @   26 xxx      : -> b'git+ssh://github.com/antlr'
+x  Prefix @   27 xxx      : -> b'git+ssh://github.com/antlr/'
+x  Prefix @   41 xxx      : -> b'git+ssh://github.com/antlr/grammar-v4.git'
++  Prefix @   42 inc     3: -> b'git+ssh://github.com/antlr/grammar-v4.git\n'
+   - Byte @   42 inc     3:    b'git+ssh://github.com/antlr/grammar-v4.git\n'
+
+
+-- archr/apr_uri_parse
++  Prefix @    7 inc    17: -> b'git+ssh'
+   - Byte @    1 inc    14:    b'g'
+   - Byte @    2 inc     2:    b'gi'
+   - Byte @    3 inc     1:    b'git'
++  Prefix @   10 inc    15: -> b'git+ssh://'
+   - Byte @    8 inc     2:    b'git+ssh:'
+   - Byte @    9 inc     1:    b'git+ssh:/'
+   - Byte @   10 inc    12:    b'git+ssh://'
++  Prefix @   20 inc     8: -> b'git+ssh://github.com'
+   - Byte @   11 inc     6:    b'git+ssh://g'
+   - Byte @   12 inc     1:    b'git+ssh://gi'
+   - Byte @   18 inc     1:    b'git+ssh://github.c'
+x  Prefix @   21 xxx      : -> b'git+ssh://github.com/'
+x  Prefix @   26 xxx      : -> b'git+ssh://github.com/antlr'
+x  Prefix @   27 xxx      : -> b'git+ssh://github.com/antlr/'
++  Prefix @   41 inc     1: -> b'git+ssh://github.com/antlr/grammar-v4.git'
+   - Byte @   36 inc     1:    b'git+ssh://github.com/antlr/grammar-v'
+x  Prefix @   42 xxx      : -> b'git+ssh://github.com/antlr/grammar-v4.git\n'
+
+
++++++++++++++++++++
+++++++ Cross ++++++
++++++++++++++++++++
+
+archr/curl_url                 archr/apr_uri_parse           
++  43                          +  17                          b'git+ssh'
++   6                          +  15                          b'git+ssh://'
+  -                            +   8                          b'git+ssh://github.com'
+  -                              -                            b'git+ssh://github.com/'
+  -                              -                            b'git+ssh://github.com/antlr'
+  -                              -                            b'git+ssh://github.com/antlr/'
+  -                            +   1                          b'git+ssh://github.com/antlr/grammar-v4.git'
++   3                            -                            b'git+ssh://github.com/antlr/grammar-v4.git\n'

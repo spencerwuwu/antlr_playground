@@ -1,0 +1,63 @@
+
+-- archr/curl_url
++  Prefix @    4 inc    35: -> b'http'
+   - Byte @    1 inc    30:    b'h'
+   - Byte @    2 inc     5:    b'ht'
++  Prefix @    7 inc    14: -> b'http://'
+   - Byte @    5 inc    11:    b'http:'
+   - Byte @    6 inc     3:    b'http:/'
+x  Prefix @   18 xxx      : -> b'http://example.com'
+x  Prefix @   19 xxx      : -> b'http://example.com/'
+x  Prefix @   23 xxx      : -> b'http://example.com/over'
+x  Prefix @   24 xxx      : -> b'http://example.com/over/'
+x  Prefix @   29 xxx      : -> b'http://example.com/over/there'
+x  Prefix @   30 xxx      : -> b'http://example.com/over/there?'
+x  Prefix @   34 xxx      : -> b'http://example.com/over/there?name'
+x  Prefix @   35 xxx      : -> b'http://example.com/over/there?name='
+x  Prefix @   41 xxx      : -> b'http://example.com/over/there?name=ferret'
++  Prefix @   42 inc     3: -> b'http://example.com/over/there?name=ferret\n'
+   - Byte @   42 inc     3:    b'http://example.com/over/there?name=ferret\n'
+
+
+-- archr/apr_uri_parse
++  Prefix @    4 inc    17: -> b'http'
+   - Byte @    1 inc    14:    b'h'
+   - Byte @    2 inc     2:    b'ht'
+   - Byte @    3 inc     1:    b'htt'
++  Prefix @    7 inc    15: -> b'http://'
+   - Byte @    5 inc     2:    b'http:'
+   - Byte @    6 inc     1:    b'http:/'
+   - Byte @    7 inc    12:    b'http://'
++  Prefix @   18 inc     8: -> b'http://example.com'
+   - Byte @    8 inc     6:    b'http://e'
+   - Byte @    9 inc     1:    b'http://ex'
+   - Byte @   15 inc     1:    b'http://example.'
+x  Prefix @   19 xxx      : -> b'http://example.com/'
+x  Prefix @   23 xxx      : -> b'http://example.com/over'
+x  Prefix @   24 xxx      : -> b'http://example.com/over/'
+x  Prefix @   29 xxx      : -> b'http://example.com/over/there'
++  Prefix @   30 inc    10: -> b'http://example.com/over/there?'
+   - Byte @   30 inc    10:    b'http://example.com/over/there?'
+x  Prefix @   34 xxx      : -> b'http://example.com/over/there?name'
+x  Prefix @   35 xxx      : -> b'http://example.com/over/there?name='
+x  Prefix @   41 xxx      : -> b'http://example.com/over/there?name=ferret'
+x  Prefix @   42 xxx      : -> b'http://example.com/over/there?name=ferret\n'
+
+
++++++++++++++++++++
+++++++ Cross ++++++
++++++++++++++++++++
+
+archr/curl_url                 archr/apr_uri_parse           
++  35                          +  17                          b'http'
++  14                          +  15                          b'http://'
+  -                            +   8                          b'http://example.com'
+  -                              -                            b'http://example.com/'
+  -                              -                            b'http://example.com/over'
+  -                              -                            b'http://example.com/over/'
+  -                              -                            b'http://example.com/over/there'
+  -                            +  10                          b'http://example.com/over/there?'
+  -                              -                            b'http://example.com/over/there?name'
+  -                              -                            b'http://example.com/over/there?name='
+  -                              -                            b'http://example.com/over/there?name=ferret'
++   3                            -                            b'http://example.com/over/there?name=ferret\n'

@@ -1,0 +1,50 @@
+
+-- archr/curl_url
++  Prefix @    4 inc    35: -> b'http'
+   - Byte @    1 inc    30:    b'h'
+   - Byte @    2 inc     5:    b'ht'
++  Prefix @    7 inc    14: -> b'http://'
+   - Byte @    5 inc    11:    b'http:'
+   - Byte @    6 inc     3:    b'http:/'
+x  Prefix @   22 xxx      : -> b'http://svn.example.com'
+x  Prefix @   23 xxx      : -> b'http://svn.example.com/'
+x  Prefix @   26 xxx      : -> b'http://svn.example.com/svn'
+x  Prefix @   27 xxx      : -> b'http://svn.example.com/svn/'
+x  Prefix @   34 xxx      : -> b'http://svn.example.com/svn/project'
++  Prefix @   35 inc     3: -> b'http://svn.example.com/svn/project\n'
+   - Byte @   35 inc     3:    b'http://svn.example.com/svn/project\n'
+
+
+-- archr/apr_uri_parse
++  Prefix @    4 inc    17: -> b'http'
+   - Byte @    1 inc    14:    b'h'
+   - Byte @    2 inc     2:    b'ht'
+   - Byte @    3 inc     1:    b'htt'
++  Prefix @    7 inc    15: -> b'http://'
+   - Byte @    5 inc     2:    b'http:'
+   - Byte @    6 inc     1:    b'http:/'
+   - Byte @    7 inc    12:    b'http://'
++  Prefix @   22 inc     8: -> b'http://svn.example.com'
+   - Byte @    8 inc     6:    b'http://s'
+   - Byte @    9 inc     1:    b'http://sv'
+   - Byte @   15 inc     1:    b'http://svn.exam'
+x  Prefix @   23 xxx      : -> b'http://svn.example.com/'
+x  Prefix @   26 xxx      : -> b'http://svn.example.com/svn'
+x  Prefix @   27 xxx      : -> b'http://svn.example.com/svn/'
+x  Prefix @   34 xxx      : -> b'http://svn.example.com/svn/project'
+x  Prefix @   35 xxx      : -> b'http://svn.example.com/svn/project\n'
+
+
++++++++++++++++++++
+++++++ Cross ++++++
++++++++++++++++++++
+
+archr/curl_url                 archr/apr_uri_parse           
++  35                          +  17                          b'http'
++  14                          +  15                          b'http://'
+  -                            +   8                          b'http://svn.example.com'
+  -                              -                            b'http://svn.example.com/'
+  -                              -                            b'http://svn.example.com/svn'
+  -                              -                            b'http://svn.example.com/svn/'
+  -                              -                            b'http://svn.example.com/svn/project'
++   3                            -                            b'http://svn.example.com/svn/project\n'

@@ -1,0 +1,50 @@
+
+-- archr/curl_url
++  Prefix @    4 inc    35: -> b'ftps'
+   - Byte @    1 inc    30:    b'f'
+   - Byte @    2 inc     5:    b'ft'
++  Prefix @    7 inc    14: -> b'ftps://'
+   - Byte @    5 inc    11:    b'ftps:'
+   - Byte @    6 inc     3:    b'ftps:/'
+x  Prefix @   18 xxx      : -> b'ftps://example.com'
+x  Prefix @   19 xxx      : -> b'ftps://example.com/'
+x  Prefix @   22 xxx      : -> b'ftps://example.com/pub'
+x  Prefix @   23 xxx      : -> b'ftps://example.com/pub/'
+x  Prefix @   31 xxx      : -> b'ftps://example.com/pub/file.txt'
++  Prefix @   32 inc     3: -> b'ftps://example.com/pub/file.txt\n'
+   - Byte @   32 inc     3:    b'ftps://example.com/pub/file.txt\n'
+
+
+-- archr/apr_uri_parse
++  Prefix @    4 inc    17: -> b'ftps'
+   - Byte @    1 inc    14:    b'f'
+   - Byte @    2 inc     2:    b'ft'
+   - Byte @    3 inc     1:    b'ftp'
++  Prefix @    7 inc    15: -> b'ftps://'
+   - Byte @    5 inc     2:    b'ftps:'
+   - Byte @    6 inc     1:    b'ftps:/'
+   - Byte @    7 inc    12:    b'ftps://'
++  Prefix @   18 inc     8: -> b'ftps://example.com'
+   - Byte @    8 inc     6:    b'ftps://e'
+   - Byte @    9 inc     1:    b'ftps://ex'
+   - Byte @   15 inc     1:    b'ftps://example.'
+x  Prefix @   19 xxx      : -> b'ftps://example.com/'
+x  Prefix @   22 xxx      : -> b'ftps://example.com/pub'
+x  Prefix @   23 xxx      : -> b'ftps://example.com/pub/'
+x  Prefix @   31 xxx      : -> b'ftps://example.com/pub/file.txt'
+x  Prefix @   32 xxx      : -> b'ftps://example.com/pub/file.txt\n'
+
+
++++++++++++++++++++
+++++++ Cross ++++++
++++++++++++++++++++
+
+archr/curl_url                 archr/apr_uri_parse           
++  35                          +  17                          b'ftps'
++  14                          +  15                          b'ftps://'
+  -                            +   8                          b'ftps://example.com'
+  -                              -                            b'ftps://example.com/'
+  -                              -                            b'ftps://example.com/pub'
+  -                              -                            b'ftps://example.com/pub/'
+  -                              -                            b'ftps://example.com/pub/file.txt'
++   3                            -                            b'ftps://example.com/pub/file.txt\n'

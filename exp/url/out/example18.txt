@@ -1,0 +1,50 @@
+
+-- archr/curl_url
++  Prefix @    4 inc    35: -> b'file'
+   - Byte @    1 inc    30:    b'f'
+   - Byte @    2 inc     5:    b'fi'
++  Prefix @    7 inc    14: -> b'file://'
+   - Byte @    5 inc    11:    b'file:'
+   - Byte @    6 inc     3:    b'file:/'
+x  Prefix @   16 xxx      : -> b'file://localhost'
+x  Prefix @   17 xxx      : -> b'file://localhost/'
+x  Prefix @   20 xxx      : -> b'file://localhost/etc'
+x  Prefix @   21 xxx      : -> b'file://localhost/etc/'
+x  Prefix @   26 xxx      : -> b'file://localhost/etc/fstab'
++  Prefix @   27 inc     3: -> b'file://localhost/etc/fstab\n'
+   - Byte @   27 inc     3:    b'file://localhost/etc/fstab\n'
+
+
+-- archr/apr_uri_parse
++  Prefix @    4 inc    17: -> b'file'
+   - Byte @    1 inc    14:    b'f'
+   - Byte @    2 inc     2:    b'fi'
+   - Byte @    3 inc     1:    b'fil'
++  Prefix @    7 inc    15: -> b'file://'
+   - Byte @    5 inc     2:    b'file:'
+   - Byte @    6 inc     1:    b'file:/'
+   - Byte @    7 inc    12:    b'file://'
++  Prefix @   16 inc     8: -> b'file://localhost'
+   - Byte @    8 inc     6:    b'file://l'
+   - Byte @    9 inc     1:    b'file://lo'
+   - Byte @   15 inc     1:    b'file://localhos'
+x  Prefix @   17 xxx      : -> b'file://localhost/'
+x  Prefix @   20 xxx      : -> b'file://localhost/etc'
+x  Prefix @   21 xxx      : -> b'file://localhost/etc/'
+x  Prefix @   26 xxx      : -> b'file://localhost/etc/fstab'
+x  Prefix @   27 xxx      : -> b'file://localhost/etc/fstab\n'
+
+
++++++++++++++++++++
+++++++ Cross ++++++
++++++++++++++++++++
+
+archr/curl_url                 archr/apr_uri_parse           
++  35                          +  17                          b'file'
++  14                          +  15                          b'file://'
+  -                            +   8                          b'file://localhost'
+  -                              -                            b'file://localhost/'
+  -                              -                            b'file://localhost/etc'
+  -                              -                            b'file://localhost/etc/'
+  -                              -                            b'file://localhost/etc/fstab'
++   3                            -                            b'file://localhost/etc/fstab\n'

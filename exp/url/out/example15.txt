@@ -1,0 +1,45 @@
+
+-- archr/curl_url
++  Prefix @    4 inc    35: -> b'http'
+   - Byte @    1 inc    30:    b'h'
+   - Byte @    2 inc     5:    b'ht'
++  Prefix @    7 inc    14: -> b'http://'
+   - Byte @    5 inc    11:    b'http:'
+   - Byte @    6 inc     3:    b'http:/'
+x  Prefix @   18 xxx      : -> b'http://example.com'
+x  Prefix @   19 xxx      : -> b'http://example.com/'
+x  Prefix @   60 xxx      : -> b'http://example.com/%E5%BC%95%E3%81%8D%E5%89%B2%E3%82%8A.html'
++  Prefix @   61 inc     3: -> b'http://example.com/%E5%BC%95%E3%81%8D%E5%89%B2%E3%82%8A.html\n'
+   - Byte @   61 inc     3:    b'http://example.com/%E5%BC%95%E3%81%8D%E5%89%B2%E3%82%8A.html\n'
+
+
+-- archr/apr_uri_parse
++  Prefix @    4 inc    17: -> b'http'
+   - Byte @    1 inc    14:    b'h'
+   - Byte @    2 inc     2:    b'ht'
+   - Byte @    3 inc     1:    b'htt'
++  Prefix @    7 inc    15: -> b'http://'
+   - Byte @    5 inc     2:    b'http:'
+   - Byte @    6 inc     1:    b'http:/'
+   - Byte @    7 inc    12:    b'http://'
++  Prefix @   18 inc     8: -> b'http://example.com'
+   - Byte @    8 inc     6:    b'http://e'
+   - Byte @    9 inc     1:    b'http://ex'
+   - Byte @   15 inc     1:    b'http://example.'
+x  Prefix @   19 xxx      : -> b'http://example.com/'
++  Prefix @   60 inc     1: -> b'http://example.com/%E5%BC%95%E3%81%8D%E5%89%B2%E3%82%8A.html'
+   - Byte @   51 inc     1:    b'http://example.com/%E5%BC%95%E3%81%8D%E5%89%B2%E3%8'
+x  Prefix @   61 xxx      : -> b'http://example.com/%E5%BC%95%E3%81%8D%E5%89%B2%E3%82%8A.html\n'
+
+
++++++++++++++++++++
+++++++ Cross ++++++
++++++++++++++++++++
+
+archr/curl_url                 archr/apr_uri_parse           
++  35                          +  17                          b'http'
++  14                          +  15                          b'http://'
+  -                            +   8                          b'http://example.com'
+  -                              -                            b'http://example.com/'
+  -                            +   1                          b'http://example.com/%E5%BC%95%E3%81%8D%E5%89%B2%E3%82%8A.html'
++   3                            -                            b'http://example.com/%E5%BC%95%E3%81%8D%E5%89%B2%E3%82%8A.html\n'

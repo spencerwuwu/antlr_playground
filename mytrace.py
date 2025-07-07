@@ -136,16 +136,16 @@ def compare_b2b(prefix_inputs, prefix_covs, byte_inputs, byte_covs):
             continue
 
         if len(prefix_covs[idx]) == 0:
-            print(f"x  Prefix @{input_len:5d} xxx      : ->", prefix_inputs[idx])
+            print(f"x  Prefix @{input_len:5d} xxx      : ->", prefix_inputs[idx][-50:])
         else:
             pre_inc_len = len(prefix_inputs[prev_prefix_inc_idx])
 
-            print(f"+  Prefix @{input_len:5d} inc {len(prefix_covs[idx]):5d}: ->", prefix_inputs[idx])
+            print(f"+  Prefix @{input_len:5d} inc {len(prefix_covs[idx]):5d}: ->", prefix_inputs[idx][-50:])
 
             byte_incs = [byte_idx for byte_idx in range(pre_inc_len+1, input_len+1) if len(byte_covs[byte_idx]) > 0]
 
             for byte_idx in byte_incs:
-                print(f"   - Byte @{byte_idx:5d} inc {len(byte_covs[byte_idx]):5d}:   ",  byte_inputs[byte_idx])
+                print(f"   - Byte @{byte_idx:5d} inc {len(byte_covs[byte_idx]):5d}:   ",  byte_inputs[byte_idx][-50:])
             prev_prefix_inc_idx = idx
 
 
@@ -193,10 +193,10 @@ def handle_dual(pt, docker_image_a, docker_image_b, outdir=None, outname=None):
         prefix_cov_a, prefix_cov_b = prefix_cov
         len_a = get_len_text(len(prefix_cov_a))
         len_b = get_len_text(len(prefix_cov_b))
-        print(f"{len_a:30s} {len_b:30s} {prefix_in_a[idx]}")
+        print(f"{len_a:30s} {len_b:30s} {prefix_in_a[idx][-50:]}")
 
     if outdir is not None and outname is not None:
-        result = {"parsed_tokens": [s.decode().__repr__() for s in prefix_in_a],
+        result = {"parsed_tokens": [s.decode() for s in prefix_in_a],
                   "results": [
                   {"name": docker_image_a,
                    "byte_covs": [list(s) for s in naive_covs_a],

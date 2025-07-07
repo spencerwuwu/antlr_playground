@@ -1,0 +1,59 @@
+
+-- archr/curl_url
++  Prefix @    4 inc   172: -> b'http'
+   - Byte @    1 inc   167:    b'h'
+   - Byte @    2 inc     6:    b'ht'
+   - Byte @    3 inc     1:    b'htt'
+   - Byte @    4 inc     2:    b'http'
++  Prefix @    7 inc    55: -> b'http://'
+   - Byte @    5 inc     9:    b'http:'
+   - Byte @    6 inc    49:    b'http:/'
++  Prefix @   21 inc     3: -> b'http://www.khubla.com'
+   - Byte @   11 inc     1:    b'http://www.'
+   - Byte @   12 inc     1:    b'http://www.k'
+   - Byte @   15 inc     1:    b'http://www.khub'
++  Prefix @   22 inc     4: -> b'http://www.khubla.com:'
++  Prefix @   26 inc   130: -> b'http://www.khubla.com:8080'
+   - Byte @   23 inc   118:    b'http://www.khubla.com:8'
+   - Byte @   24 inc     9:    b'http://www.khubla.com:80'
++  Prefix @   27 inc     1: -> b'http://www.khubla.com:8080/'
+   - Byte @   27 inc     1:    b'http://www.khubla.com:8080/'
++  Prefix @   37 inc    37: -> b'http://www.khubla.com:8080/index.html'
+   - Byte @   28 inc    36:    b'http://www.khubla.com:8080/i'
+   - Byte @   29 inc     1:    b'http://www.khubla.com:8080/in'
+
+
+-- archr/apr_uri_parse
++  Prefix @    4 inc    17: -> b'http'
+   - Byte @    1 inc    14:    b'h'
+   - Byte @    2 inc     2:    b'ht'
+   - Byte @    3 inc     1:    b'htt'
++  Prefix @    7 inc    12: -> b'http://'
+   - Byte @    5 inc     2:    b'http:'
+   - Byte @    6 inc     1:    b'http:/'
+   - Byte @    7 inc     9:    b'http://'
++  Prefix @   21 inc     7: -> b'http://www.khubla.com'
+   - Byte @    8 inc     5:    b'http://w'
+   - Byte @    9 inc     1:    b'http://ww'
+   - Byte @   15 inc     1:    b'http://www.khub'
++  Prefix @   22 inc     5: -> b'http://www.khubla.com:'
+   - Byte @   22 inc     5:    b'http://www.khubla.com:'
++  Prefix @   26 inc    30: -> b'http://www.khubla.com:8080'
+   - Byte @   23 inc    29:    b'http://www.khubla.com:8'
+   - Byte @   24 inc     1:    b'http://www.khubla.com:80'
+x  Prefix @   27 xxx      : -> b'http://www.khubla.com:8080/'
+x  Prefix @   37 xxx      : -> b'http://www.khubla.com:8080/index.html'
+
+
++++++++++++++++++++
+++++++ Cross ++++++
++++++++++++++++++++
+
+archr/curl_url                 archr/apr_uri_parse           
++ 172                          +  17                          b'http'
++  55                          +  12                          b'http://'
++   3                          +   7                          b'http://www.khubla.com'
++   4                          +   5                          b'http://www.khubla.com:'
++ 130                          +  30                          b'http://www.khubla.com:8080'
++   1                            -                            b'http://www.khubla.com:8080/'
++  37                            -                            b'http://www.khubla.com:8080/index.html'

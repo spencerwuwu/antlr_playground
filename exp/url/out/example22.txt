@@ -1,0 +1,59 @@
+
+-- archr/curl_url
++  Prefix @    4 inc    35: -> b'http'
+   - Byte @    1 inc    30:    b'h'
+   - Byte @    2 inc     5:    b'ht'
++  Prefix @    7 inc    14: -> b'http://'
+   - Byte @    5 inc    11:    b'http:'
+   - Byte @    6 inc     3:    b'http:/'
+x  Prefix @    8 xxx      : -> b'http://['
+x  Prefix @   10 xxx      : -> b'http://[::'
+x  Prefix @   11 xxx      : -> b'http://[::1'
+x  Prefix @   12 xxx      : -> b'http://[::1]'
+x  Prefix @   13 xxx      : -> b'http://[::1]:'
+x  Prefix @   15 xxx      : -> b'http://[::1]:80'
+x  Prefix @   16 xxx      : -> b'http://[::1]:80/'
++  Prefix @   17 inc     3: -> b'http://[::1]:80/\n'
+   - Byte @   17 inc     3:    b'http://[::1]:80/\n'
+
+
+-- archr/apr_uri_parse
++  Prefix @    4 inc    17: -> b'http'
+   - Byte @    1 inc    16:    b'h'
+   - Byte @    2 inc     3:    b'ht'
+   - Byte @    3 inc     1:    b'htt'
++  Prefix @    7 inc    11: -> b'http://'
+   - Byte @    5 inc     2:    b'http:'
+   - Byte @    6 inc     1:    b'http:/'
+   - Byte @    7 inc     7:    b'http://'
++  Prefix @    8 inc     8: -> b'http://['
+   - Byte @    8 inc     7:    b'http://['
++  Prefix @   10 inc     2: -> b'http://[::'
+   - Byte @    9 inc     1:    b'http://[:'
+x  Prefix @   11 xxx      : -> b'http://[::1'
++  Prefix @   12 inc     3: -> b'http://[::1]'
+   - Byte @   12 inc     3:    b'http://[::1]'
++  Prefix @   13 inc     4: -> b'http://[::1]:'
+   - Byte @   13 inc     4:    b'http://[::1]:'
++  Prefix @   15 inc    30: -> b'http://[::1]:80'
+   - Byte @   14 inc    28:    b'http://[::1]:8'
+   - Byte @   15 inc     2:    b'http://[::1]:80'
+x  Prefix @   16 xxx      : -> b'http://[::1]:80/'
+x  Prefix @   17 xxx      : -> b'http://[::1]:80/\n'
+
+
++++++++++++++++++++
+++++++ Cross ++++++
++++++++++++++++++++
+
+archr/curl_url                 archr/apr_uri_parse           
++  35                          +  17                          b'http'
++  14                          +  11                          b'http://'
+  -                            +   8                          b'http://['
+  -                            +   2                          b'http://[::'
+  -                              -                            b'http://[::1'
+  -                            +   3                          b'http://[::1]'
+  -                            +   4                          b'http://[::1]:'
+  -                            +  30                          b'http://[::1]:80'
+  -                              -                            b'http://[::1]:80/'
++   3                            -                            b'http://[::1]:80/\n'

@@ -1,0 +1,59 @@
+
+-- archr/curl_url
++  Prefix @    5 inc    35: -> b'https'
+   - Byte @    1 inc    30:    b'h'
+   - Byte @    2 inc     5:    b'ht'
++  Prefix @    8 inc    14: -> b'https://'
+   - Byte @    6 inc    11:    b'https:'
+   - Byte @    7 inc     3:    b'https:/'
+x  Prefix @   18 xxx      : -> b'https://github.com'
+x  Prefix @   19 xxx      : -> b'https://github.com/'
+x  Prefix @   26 xxx      : -> b'https://github.com/dpaukov'
+x  Prefix @   27 xxx      : -> b'https://github.com/dpaukov/'
+x  Prefix @   44 xxx      : -> b'https://github.com/dpaukov/combinatoricslib3'
+x  Prefix @   45 xxx      : -> b'https://github.com/dpaukov/combinatoricslib3#'
++  Prefix @   66 inc     2: -> b'https://github.com/dpaukov/combinatoricslib3#3-simple-permutations'
+   - Byte @   64 inc     2:    b'https://github.com/dpaukov/combinatoricslib3#3-simple-permutatio'
++  Prefix @   67 inc     3: -> b'https://github.com/dpaukov/combinatoricslib3#3-simple-permutations\n'
+   - Byte @   67 inc     3:    b'https://github.com/dpaukov/combinatoricslib3#3-simple-permutations\n'
+
+
+-- archr/apr_uri_parse
++  Prefix @    5 inc    17: -> b'https'
+   - Byte @    1 inc    14:    b'h'
+   - Byte @    2 inc     2:    b'ht'
+   - Byte @    3 inc     1:    b'htt'
++  Prefix @    8 inc    15: -> b'https://'
+   - Byte @    6 inc     2:    b'https:'
+   - Byte @    7 inc     1:    b'https:/'
+   - Byte @    8 inc    12:    b'https://'
++  Prefix @   18 inc     8: -> b'https://github.com'
+   - Byte @    9 inc     6:    b'https://g'
+   - Byte @   10 inc     1:    b'https://gi'
+   - Byte @   16 inc     1:    b'https://github.c'
+x  Prefix @   19 xxx      : -> b'https://github.com/'
+x  Prefix @   26 xxx      : -> b'https://github.com/dpaukov'
+x  Prefix @   27 xxx      : -> b'https://github.com/dpaukov/'
++  Prefix @   44 inc     1: -> b'https://github.com/dpaukov/combinatoricslib3'
+   - Byte @   34 inc     1:    b'https://github.com/dpaukov/combina'
++  Prefix @   45 inc     8: -> b'https://github.com/dpaukov/combinatoricslib3#'
+   - Byte @   45 inc     8:    b'https://github.com/dpaukov/combinatoricslib3#'
+x  Prefix @   66 xxx      : -> b'https://github.com/dpaukov/combinatoricslib3#3-simple-permutations'
+x  Prefix @   67 xxx      : -> b'https://github.com/dpaukov/combinatoricslib3#3-simple-permutations\n'
+
+
++++++++++++++++++++
+++++++ Cross ++++++
++++++++++++++++++++
+
+archr/curl_url                 archr/apr_uri_parse           
++  35                          +  17                          b'https'
++  14                          +  15                          b'https://'
+  -                            +   8                          b'https://github.com'
+  -                              -                            b'https://github.com/'
+  -                              -                            b'https://github.com/dpaukov'
+  -                              -                            b'https://github.com/dpaukov/'
+  -                            +   1                          b'https://github.com/dpaukov/combinatoricslib3'
+  -                            +   8                          b'https://github.com/dpaukov/combinatoricslib3#'
++   2                            -                            b'https://github.com/dpaukov/combinatoricslib3#3-simple-permutations'
++   3                            -                            b'https://github.com/dpaukov/combinatoricslib3#3-simple-permutations\n'
