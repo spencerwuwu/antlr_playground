@@ -18,6 +18,20 @@ SETTINGS = {
             "target_base": "HTMLParser",
             "start_rule": "htmlDocument"
             },
+        "smtp": {
+            "grammar_files": ["SMTP.g4"],
+            "target_lexer": "SMTPLexer",
+            "target_parser": "SMTPParser",
+            "target_base": "SMTP",
+            "start_rule": "session"
+            },
+        "mime": {
+            "grammar_files": ["MimeLexer.g4", "MimeParser.g4"],
+            "target_lexer": "MimeLexer",
+            "target_parser": "MimeParser",
+            "target_base": "MimeParser",
+            "start_rule": "mimeMessage"
+            },
         "url": {
             "grammar_files": ["url.g4"],
             "target_lexer": "urlLexer",
@@ -92,7 +106,7 @@ def syn_parser(workdir, target, setting):
         print(err.decode())
         exit(1)
 
-    logger.info("Done building antlr4-{target}!")
+    logger.info(f"Done building antlr4-{target}!")
 
 
 
